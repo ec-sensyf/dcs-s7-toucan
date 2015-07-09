@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<dclite4g:Series>
+  <dc:identifier>Sample L1b data</dc:identifier>
+  <dc:title>/Sample data from MERIS</dc:title>
+  <dct:abstract>sample data for Toucan.</dct:abstract>
+  <eop:platform>MERIS</eop:platform>
+  <eop:sensor>MERIS</eop:sensor>
+  <dct:spatial>MULTIPOLYGON(((-180 -90,-180 90,180 90,180 -90,-180 -90)))</dct:spatial>
+  <dc:subject>sample images </dc:subject>
+  <dc:format>N1</dc:format>
+</dclite4g:Series>
+

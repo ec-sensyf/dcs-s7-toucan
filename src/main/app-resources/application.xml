@@ -1,22 +1,22 @@
 <?xml version="1.0" encoding="us-ascii"?>
-<application xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" id="application">
+<application xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" id="my_application">
   <jobTemplates>
-    <jobTemplate id="template">
-      <streamingExecutable>/application/node/run.py</streamingExecutable>
-            <parameters>
-                <parameter id="chlconc">0.045</parameter>
-                <parameter id="outputdir">/application/output/RS/chl0045</parameter>
-            </parameters>
+    <jobTemplate id="toucan_template01">
+      <streamingExecutable>/application/node01/run.sh</streamingExecutable>
+      <defaultParameters>
+        <parameter id="sensor">meris</parameter>
+        <parameter id="region">libya4</parameter>
+        <parameter id="bbox">[28.05, 29.05, 22.89, 23.89]</parameter>
+      </defaultParameters>
     </jobTemplate>
   </jobTemplates>
-    <workflow id="workflow" title="Basic Workflow" abstract="Basic archetype workflow for a python application">
+    <workflow id="toucan_flow">
     <workflowVersion>1.0</workflowVersion>
-    <node id="node">
-      <job id="template"/>
+    <node id="node01">
+      <job id="toucan_template01"/>
       <sources>
-        <source refid="string:list">input-1,input-2</source>
+        <source refid="file:urls">/application/input/test01/datalist</source>
       </sources>
     </node>
   </workflow>
 </application>
-
