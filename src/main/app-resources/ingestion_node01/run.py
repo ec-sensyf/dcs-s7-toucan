@@ -41,6 +41,7 @@ def main():
     filecount = 0
     j = [{'filename':None, 'region_coords': [29.05, 28.05, 23.89, 22.89], 'instrument':'MERIS', 'region_name':'Libya4'}]
 
+    ingestlog = [ ['SENSOR','REGION','DATE','FILENAME'] ]
     for inputfile in sys.stdin:
         # 2009-01-01..2009-01-02 is 1 image in the catalogue
         ciop.log('INFO', 'processing input: ' + inputfile)
@@ -48,27 +49,34 @@ def main():
 
         # catalogue products are gzipped
         prod = ciop.copy(inputfile, input_path, extract=True)
-        ciop.log('INFO', 'Retrieved ' + os.path.basename(prod))
+        bprod = os.path.basename(prod)
+        ciop.log('INFO', 'Retrieved ' + bprod)
         j[0]['filename'] = prod
         i = Ingest('testdb', j)         # there is no database really
         d = i.ingest()
-        for k in d:
-            print k,d[k]
+        if d is None:
+            s = 'FAILED'
+        else:
+            s = d['datetime']
+        ingestlog.append(['MERIS','Libya4',s,bprod])
+        del i
 
     ciop.log('INFO', '%d source images.' % filecount)
 
     # ------------------------------------------------------------
     # create the output folder to store the output products and export it
-    """
     output_path = os.path.join(ciop.tmp_dir, 'output')
     os.makedirs(output_path)
     os.chdir(output_path)
     outputfile = 'ingestion.csv'
+    p = os.path.join(output_path, outputfile)
+    with open(p, 'w') as c:
+        for l in ingestlog:
+            print >>c, ','.join([str(e) for e in l])
 
     os.chdir(ciop.tmp_dir)      # not sure why
     ciop.log('INFO', 'Publishing ' + outputfile)
-    ciop.publish(os.path.join(output_path, outputfile), metalink=True)
-    """
+    ciop.publish(p, metalink=True)
 
 
 # ----------------------------------------------------------------------------------------
