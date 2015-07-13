@@ -58,17 +58,22 @@ def main():
     # write a log entry
     ciop.log('INFO', 'Python DCS')
 
+    """
+    # only useful if you can actually set different parameters from different workflows
     chlconc = ciop.getparam('chlconc')
     try:
         chlconc = float(ciop.getparam('chlconc'))
     except:
         ciop.log('ERROR', 'Can\'t convert "%s"' % chlconc)
         sys.exit(1)
+    """
+
+    # hard-code
+    chlconc = 0.035
 
     ciop.log('INFO', 'chlconc: %s' % chlconc)
 
     for line in sys.stdin:
-        # KH: input from where?
         ciop.log('INFO', 'processing input: ' + line)
 
     # get list of snippets and metadata

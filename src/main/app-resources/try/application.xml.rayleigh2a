@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="us-ascii"?>
+<application xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" id="application">
+
+  <jobTemplates>
+    <!-- Rayleigh Scattering jobs -->
+    <!-- all hard-coded -->
+    <!-- apparently no types other than opensearch available -->
+
+    <jobTemplate id="rayleigh1">
+      <streamingExecutable>/application/rayleigh_node01/run.py</streamingExecutable>
+            <defaultParameters>
+                <parameter id="chlconc" title="Chlorophyll concentration" abstract="Chlorophyll concentration" scope="runtime" type="opensearch" target="time:end">0.035</parameter>
+                <parameter id="bbox" title="title" abstract="abstract" scope="runtime" type="opensearch" target="geo:box">28.05,29.05,22.89,23.89</parameter>
+                <parameter id="startDate" title="tilte" abstract="abstract" scope="runtime" type="opensearch" target="time:start">2009-01-01</parameter>
+                <parameter id="stopDate" title="tilte" abstract="abstract" scope="runtime" type="opensearch" target="time:stop">2009-01-02</parameter>                
+            </defaultParameters>
+    </jobTemplate>
+
+    <jobTemplate id="rayleigh2">
+      <streamingExecutable>/application/rayleigh_node02/run.py</streamingExecutable>
+            <defaultParameters>
+                <parameter id="chlconc" title="Chlorophyll concentration" abstract="Chlorophyll concentration" scope="runtime" type="opensearch" target="time:end">0.045</parameter>
+            </defaultParameters>
+    </jobTemplate>
+
+  </jobTemplates>
+
+    <workflow id="workflow" title="Toucan Sensitivity Analysis" abstract="python workflow for Toucan">
+        <workflowVersion>1.0</workflowVersion>
+
+        <node id="rayleigh_node01">
+          <job id="rayleigh1"></job>
+              <!-- apparently you have to have at least one source - not documented. -->
+              <sources>
+                  <source refid="cas:series">http://sensyf.terradue.int/catalogue/search/MER_RR__1P/description</source>
+              </sources>
+              <parameters>
+              </parameters>
+        </node>
+
+        <node id="rayleigh_node02">
+          <job id="rayleigh2"></job>
+              <sources>
+                  <source refid="file:urls">/application/input/list</source>
+              </sources>
+        </node>
+
+  </workflow>
+
+</application>
+
