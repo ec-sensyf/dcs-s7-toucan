@@ -8,7 +8,7 @@
             <defaultParameters>
                 <parameter id="bbox" title="Bounding box" abstract="Bounding box of region" type="opensearch" target="geo:box">28.05,29.05,22.89,23.89</parameter>
                 <parameter id="startDate" title="Start date" abstract="Start date" scope="runtime" type="opensearch" target="time:start">2009-01-01</parameter>
-                <parameter id="stopDate" title="End date" abstract="End date" scope="runtime" type="opensearch" target="time:end">2009-01-02</parameter>
+                <parameter id="endDate" title="End date" abstract="End date" scope="runtime" type="opensearch" target="time:end">2009-01-02</parameter>
             </defaultParameters>
     </jobTemplate>
 
