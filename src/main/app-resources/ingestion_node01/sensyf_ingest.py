@@ -4,16 +4,20 @@ import sys
 import os.path
 from os import makedirs
 import argparse
+import importlib
 #import json
 #import numpy as np
 
 # Toucan modules
-sys.path.insert(0, '/data/TOUCAN')
-import toucan_config
-import libingest
+#sys.path.insert(0, '/opt/anaconda/pkgs/toucan-0.2.1-py27_0/lib/python2.7/site-packages/TOUCAN')
+##import toucan_config
+#import libingest
 #from imagedb import imagedb
 #from toucanio import toucanio
 
+# packaged version on cluster
+#import TOUCAN.toucan_config as toucan_config
+from TOUCAN.instruments import libingest
 
 # -------------------------------------------------------------------------------------------
 class Ingest:
@@ -87,9 +91,11 @@ class Ingest:
         :raises IOError: if the requested instrument type is not coded
         """
 
-        instrument = self.user_params['instrument'].lower()               # canonicalise to lower-case
+        instrument = self.user_params['instrument']
+        linstrument = self.user_params['instrument'].lower()               # canonicalise to lower-case
         try:
-            reader = __import__('ingest_%s' % instrument)                 # path is in toucan_config
+            reader = importlib.import_module('TOUCAN.instruments.%s.ingest_%s' % (instrument,linstrument))
+            # e.g. import TOUCAN.instruments.MERIS.ingest_meris -> reader=ingest_meris
         except ImportError:
             raise IOError('No reader for instrument %s.' % instrument)
 
@@ -186,3 +192,4 @@ class Ingest:
         except:
             # ignore if connection not created in the first place
             pass
+
